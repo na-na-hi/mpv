@@ -611,6 +611,26 @@ local function add_file(s)
         append_property(s, "media-title", {prefix="Title:"})
     end
 
+    if mp.get_property_osd("metadata/artist") then
+        append_property(s, "metadata/artist", {prefix="Artist:"})
+    end
+    if mp.get_property_osd("metadata/album") then
+        append_property(s, "metadata/album", {prefix="Album:"})
+    end
+    if mp.get_property_osd("metadata/album_artist") then
+        append_property(s, "metadata/album_artist", {prefix="Album Artist:"})
+    end
+    if mp.get_property_osd("metadata/composer") then
+        append_property(s, "metadata/composer", {prefix="Composer:"})
+    end
+    if mp.get_property_osd("metadata/date") then
+        append_property(s, "metadata/date", {prefix="Date:"})
+    end
+    local date = mp.get_property_native("metadata/date")
+    if mp.get_property_osd("metadata/track") then
+        append_property(s, "metadata/track", {prefix="Track:", nl=date and "" or o.nl})
+    end
+
     local editions = mp.get_property_number("editions")
     local edition = mp.get_property_number("current-edition")
     local ed_cond = (edition and editions > 1)
