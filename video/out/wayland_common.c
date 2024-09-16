@@ -1383,6 +1383,10 @@ static void main_device(void *data,
                         struct wl_array *device)
 {
     struct vo_wayland_state *wl = data;
+    dev_t *id;
+    wl_array_for_each(id, device) {
+        MP_DBG(wl, "Main device id: %d\n", (int)*id);
+    }
     wl->add_tranche = true;
 
 }
@@ -1399,9 +1403,12 @@ static void tranche_target_device(void *data,
                                   struct wl_array *device)
 {
     struct vo_wayland_state *wl = data;
+    dev_t *id;
+    wl_array_for_each(id, device) {
+        MP_DBG(wl, "Device id: %d\n", (int)*id);
+    }
     // Only use the first tranche device we get.
     if (wl->add_tranche) {
-        dev_t *id;
         wl_array_for_each(id, device) {
             memcpy(&wl->target_device_id, id, sizeof(dev_t));
             break;
